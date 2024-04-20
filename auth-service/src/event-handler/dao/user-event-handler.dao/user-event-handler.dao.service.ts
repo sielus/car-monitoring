@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { UserRemovePayloadEvent } from 'src/event-handler/dto/user-remove-payload.event';
 import { UserUpsertPayloadEvent } from 'src/event-handler/dto/user-upsert-payload.event';
+import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -58,5 +60,15 @@ export class UserEventHandlerDaoService {
         });
       }
     }
+  }
+
+  public async removeUser(eventData: UserRemovePayloadEvent) {
+    const data = await this.prisma.user.findFirst({
+      where: { userId: eventData.data.userId },
+    });
+    if (!data) {
+      throw new UserNotFoundException();
+    }
+    await this.prisma.user.delete({ where: { id: data.id } });
   }
 }

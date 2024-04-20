@@ -25,8 +25,8 @@ export class EventHandlerController {
 
   @EventPattern('user-service.remove-user')
   public async handleUpdateUserEvent(
-    @Payload() payload: { payload: UserRemovePayloadEvent },
+    @Payload() event: { event: UserRemovePayloadEvent },
   ) {
-    console.log(payload.payload);
+    await this.eventHandlerService.removeUser(event.event);
   }
 }
