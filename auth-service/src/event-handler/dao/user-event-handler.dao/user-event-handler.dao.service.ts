@@ -39,4 +39,14 @@ export class UserEventHandlerDaoService {
     }
     await this.prisma.user.delete({ where: { id: data.id } });
   }
+
+  public async removeUser(eventData: UserRemovePayloadEvent) {
+    const data = await this.prisma.user.findFirst({
+      where: { userId: eventData.data.userId },
+    });
+    if (!data) {
+      throw new UserNotFoundException();
+    }
+    await this.prisma.user.delete({ where: { id: data.id } });
+  }
 }
