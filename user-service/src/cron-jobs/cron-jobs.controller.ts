@@ -11,5 +11,9 @@ export class CronJobsController {
     await this.cronJobsService.sendUserUpsertEvents();
     await this.cronJobsService.sendUserRemoveEvents();
 
+    await this.cronJobsService.sendUserScopeRelationUpsertEvents();
+    await this.cronJobsService.sendUserScopeRelationRemoveEvents();
+
+
   }
 }

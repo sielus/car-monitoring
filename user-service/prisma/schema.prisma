@@ -34,6 +34,9 @@ model UserScopeRelation {
   scope   Scope  @relation(fields: [scopeId], references: [id])
   scopeId String
 
+  isPublished Boolean @default(false)
+  isRemoved   Boolean @default(false)
+
   @@unique([scopeId, userId])
 }
 

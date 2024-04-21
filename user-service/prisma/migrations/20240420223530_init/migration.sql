@@ -1,11 +1,12 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
     "login" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "updatedAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isPublished" BOOLEAN NOT NULL DEFAULT false,
+    "isRemoved" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -15,6 +16,8 @@ CREATE TABLE "UserScopeRelation" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "scopeId" TEXT NOT NULL,
+    "isPublished" BOOLEAN NOT NULL DEFAULT false,
+    "isRemoved" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "UserScopeRelation_pkey" PRIMARY KEY ("id")
 );
@@ -28,7 +31,7 @@ CREATE TABLE "Scope" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_login_userId_key" ON "User"("login", "userId");
+CREATE UNIQUE INDEX "User_login_key" ON "User"("login");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserScopeRelation_scopeId_userId_key" ON "UserScopeRelation"("scopeId", "userId");

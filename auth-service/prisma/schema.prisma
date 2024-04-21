@@ -22,13 +22,14 @@ model User {
   updatedAt DateTime?
   createdAt DateTime            @default(now())
 
+  @@unique([userId])
   @@unique([login, userId])
-  @@index([login,password])
+  @@index([login, password])
 }
 
 model UserScopeRelation {
   id      String @id @default(uuid())
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
   scope   Scope  @relation(fields: [scopeId], references: [id])
   scopeId String

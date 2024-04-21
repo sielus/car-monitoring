@@ -1,12 +1,11 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "login" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "updatedAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "isPublished" BOOLEAN NOT NULL DEFAULT false,
-    "isRemoved" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -29,7 +28,13 @@ CREATE TABLE "Scope" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_login_key" ON "User"("login");
+CREATE INDEX "User_login_password_idx" ON "User"("login", "password");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_userId_key" ON "User"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_login_userId_key" ON "User"("login", "userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserScopeRelation_scopeId_userId_key" ON "UserScopeRelation"("scopeId", "userId");
@@ -38,7 +43,7 @@ CREATE UNIQUE INDEX "UserScopeRelation_scopeId_userId_key" ON "UserScopeRelation
 CREATE UNIQUE INDEX "Scope_scope_key" ON "Scope"("scope");
 
 -- AddForeignKey
-ALTER TABLE "UserScopeRelation" ADD CONSTRAINT "UserScopeRelation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserScopeRelation" ADD CONSTRAINT "UserScopeRelation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserScopeRelation" ADD CONSTRAINT "UserScopeRelation_scopeId_fkey" FOREIGN KEY ("scopeId") REFERENCES "Scope"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -7,5 +7,4 @@ type UserDetails = {
   userId: string;
   login: string;
   password: string;
-  scope: Array<string>;
 };

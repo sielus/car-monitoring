@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/user-manage/dto/create-user.dto';
-import { UpdateUserConfigDto } from "src/user-manage/dto/update-user.config.dto";
+import { UpdateUserConfigDto } from 'src/user-manage/dto/update-user.config.dto';
 import { UpdateUserDto } from 'src/user-manage/dto/update-user.dto';
 import { UserManageDaoService } from 'src/user-manage/services/dao/user-manage.dao/user-manage.dao.service';
 

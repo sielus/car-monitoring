@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRemovePayloadEvent } from 'src/cron-jobs/services/events/dto/user-remove-payload.event';
+import { UserScopeRelationPayloadEvent } from 'src/cron-jobs/services/events/dto/user-scope-relation-payload.event';
 import { UserUpsertPayloadEvent } from 'src/cron-jobs/services/events/dto/user-upsert-payload.event';
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -15,15 +16,6 @@ export class UserEventDaoService {
         id: true,
         login: true,
         password: true,
-        scopes: {
-          select: {
-            scope: {
-              select: {
-                scope: true,
-              },
-            },
-          },
-        },
       },
     });
     return data.map((record) => {
@@ -31,9 +23,6 @@ export class UserEventDaoService {
         login: record.login,
         password: record.password,
         userId: record.id,
-        scope: record.scopes.map((value) => {
-          return value.scope.scope;
-        }),
       });
     });
   }
