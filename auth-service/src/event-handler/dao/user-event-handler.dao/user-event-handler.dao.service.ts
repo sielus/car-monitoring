@@ -28,38 +28,6 @@ export class UserEventHandlerDaoService {
         },
       },
     });
-    for (const record of payload.data.scope) {
-      const relation = await this.prisma.userScopeRelation.findFirst({
-        where: {
-          scope: {
-            scope: record,
-          },
-          user: { userId: payload.data.userId },
-        },
-      });
-      if (!relation) {
-        await this.prisma.userScopeRelation.create({
-          data: {
-            user: {
-              connect: {
-                login_userId: {
-                  login: payload.data.login,
-                  userId: payload.data.userId,
-                },
-              },
-            },
-            scope: {
-              connectOrCreate: {
-                where: {
-                  scope: record,
-                },
-                create: { scope: record },
-              },
-            },
-          },
-        });
-      }
-    }
   }
 
   public async removeUser(eventData: UserRemovePayloadEvent) {

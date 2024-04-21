@@ -22,6 +22,7 @@ model User {
   updatedAt DateTime?
   createdAt DateTime            @default(now())
 
+  @@unique([userId])
   @@unique([login, userId])
   @@index([login, password])
 }

@@ -6,6 +6,7 @@ import {
   Payload,
 } from '@nestjs/microservices';
 import { UserRemovePayloadEvent } from 'src/event-handler/dto/user-remove-payload.event';
+import { UserScopeRelationPayloadEvent } from 'src/event-handler/dto/user-scope-relation-payload.event';
 import { UserUpsertPayloadEvent } from 'src/event-handler/dto/user-upsert-payload.event';
 import { EventHandlerService } from 'src/event-handler/event-handler.service';
 
@@ -28,5 +29,19 @@ export class EventHandlerController {
     @Payload() event: { event: UserRemovePayloadEvent },
   ) {
     await this.eventHandlerService.removeUser(event.event);
+  }
+
+  @EventPattern('user-service.create-user-scope-relation')
+  public async handleCreateUserScopeRelationEvent(
+    @Payload() event: { event: UserScopeRelationPayloadEvent },
+  ) {
+    await this.eventHandlerService.createUserScoreRelation(event.event);
+  }
+
+  @EventPattern('user-service.remove-user-scope-relation')
+  public async handleRemoveUserScopeRelationEvent(
+    @Payload() event: { event: UserScopeRelationPayloadEvent },
+  ) {
+    await this.eventHandlerService.removeUserScopeRelation(event.event);
   }
 }
