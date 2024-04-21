@@ -26,6 +26,15 @@ export class UserScopeRelationEventDaoService {
   }
 
   public async handleRemoveEvent(event: UserScopeRelationPayloadEvent) {
+    const recordId = await this.getRecordId(event);
+    await this.prisma.userScopeRelation.delete({
+      where: {
+        id: recordId.id,
+      },
+    });
+  }
+
+  private async getRecordId(event: UserScopeRelationPayloadEvent) {
     const recordId = await this.prisma.userScopeRelation.findFirst({
       where: {
         scope: { scope: event.data.scope },
@@ -36,10 +45,6 @@ export class UserScopeRelationEventDaoService {
     if (!recordId) {
       throw new RecordNotFoundException();
     }
-    await this.prisma.userScopeRelation.delete({
-      where: {
-        id: recordId.id,
-      },
-    });
+    return recordId;
   }
 }
