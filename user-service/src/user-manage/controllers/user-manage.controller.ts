@@ -14,7 +14,7 @@ import { AuthGuard, Scope } from 'src/guard/auth.guard';
 import { CreateUserDto } from 'src/user-manage/dto/create-user.dto';
 import { UpdateUserConfigDto } from 'src/user-manage/dto/update-user.config.dto';
 import { UpdateUserDto } from 'src/user-manage/dto/update-user.dto';
-import { UserManageService } from 'src/user-manage/user-manage.service';
+import { UserManageService } from 'src/user-manage/services/user-manage.service';
 
 @ApiBearerAuth('jwt')
 @Controller('user-manage')
@@ -41,6 +41,7 @@ export class UserManageController {
       new UpdateUserConfigDto(request['user']['id'], payload),
     );
   }
+
   @UseGuards(AuthGuard)
   @Scope('user')
   @Delete()
