@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/user-manage/dto/create-user.dto';
 import { UpdateUserConfigDto } from 'src/user-manage/dto/update-user.config.dto';
-import { UpdateUserDto } from 'src/user-manage/dto/update-user.dto';
-import { UserManageDaoService } from 'src/user-manage/services/dao/user-manage.dao/user-manage.dao.service';
+import { UserManageDaoService } from 'src/user-manage/services/dao/user-manage.dao.service';
 
 @Injectable()
 export class UserManageService {
@@ -23,8 +22,4 @@ export class UserManageService {
   public async removeUser(userId: string) {
     await this.userManageDao.softRemoveUser(userId);
   }
-
-  public async assignUserToCar() {}
-
-  public async removeCarFromUser() {}
 }

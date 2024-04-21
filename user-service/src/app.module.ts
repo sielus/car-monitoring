@@ -8,6 +8,7 @@ import { AppService } from 'src/app.service';
 import { CronJobsModule } from 'src/cron-jobs/cron-jobs.module';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserManageModule } from './user-manage/user-manage.module';
+import { UserManageAdminModule } from './user-manage-admin/user-manage-admin.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserManageModule } from './user-manage/user-manage.module';
       signOptions: { algorithm: 'RS512' },
       global: true,
     }),
+    UserManageAdminModule,
     // GraphQLModule.forRoot<ApolloDriverConfig>({
     //   driver: ApolloDriver,
     //   playground: true,

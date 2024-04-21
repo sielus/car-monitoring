@@ -50,10 +50,6 @@ export class UserManageDaoService {
     });
   }
 
-  public async assignUserToCar() {}
-
-  public async removeCarFromUser() {}
-
   private async checkIfUserIdExist(userId: string) {
     const userData = await this.prisma.user.findUnique({
       where: { id: userId, isRemoved: false },
