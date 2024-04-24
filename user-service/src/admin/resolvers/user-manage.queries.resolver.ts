@@ -1,6 +1,6 @@
 import { Args, ObjectType, ResolveField, Resolver } from '@nestjs/graphql';
-import { UserArgDto } from '../dto/user.arg.dto';
-import { UserEntity } from '../entities/user.entity';
+import { UserArgDto } from 'src/admin/dto/user.arg.dto';
+import { UserEntity } from 'src/admin/entities/user.entity';
 
 @ObjectType()
 export class UserManageQueries {}

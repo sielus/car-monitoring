@@ -5,6 +5,7 @@ export class UserRemovePayloadEvent extends EventPayloadAbstract {
     super();
     this.data = userDetails;
   }
+
   data: UserDetails;
 }
 

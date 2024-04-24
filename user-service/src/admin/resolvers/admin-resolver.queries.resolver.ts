@@ -1,5 +1,5 @@
 import { ObjectType, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { UserManageQueries } from './user-manage.queries.resolver';
+import { UserManageQueries } from 'src/admin/resolvers/user-manage.queries.resolver';
 
 @ObjectType()
 export class AdminQueries {}
