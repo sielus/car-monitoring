@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UserRemovePayloadEvent } from 'src/cron-jobs/services/events/dto/user-remove-payload.event';
-import { UserScopeRelationPayloadEvent } from 'src/cron-jobs/services/events/dto/user-scope-relation-payload.event';
 import { UserUpsertPayloadEvent } from 'src/cron-jobs/services/events/dto/user-upsert-payload.event';
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';

@@ -9,7 +9,9 @@ describe('UserScopeRelationEventService', () => {
       providers: [UserScopeRelationEventService],
     }).compile();
 
-    service = module.get<UserScopeRelationEventService>(UserScopeRelationEventService);
+    service = module.get<UserScopeRelationEventService>(
+      UserScopeRelationEventService,
+    );
   });
 
   it('should be defined', () => {
