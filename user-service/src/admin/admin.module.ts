@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AdminResolver } from 'src/admin/resolvers/admin-resolver.queries.resolver';
+import { AdminResolver } from 'src/admin/admin-resolver.queries.resolver';
 import { UserManageQueriesResolver } from 'src/admin/resolvers/user-manage.queries.resolver';
 import { AdminService } from 'src/admin/services/admin.service';
 import { ScopeManageDaoService } from 'src/admin/services/scope-manage/dao/scope-manage.dao/scope-manage.dao.service';
