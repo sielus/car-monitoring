@@ -1,5 +1,8 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
+import { ScopeArgDto } from 'src/admin/dto/scope/create/scope.arg.dto';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
+import { ScopeEntity } from 'src/admin/entities/scope.entity';
+import { RecordAlreadyExistException } from 'src/exceptions/record-already-exist.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -8,24 +11,32 @@ export class ScopeManageDaoService {
 
   public async getAllScopes(
     scopeArgPayload: ScopeSearchArgDto,
-  ): Promise<Array<string>> {
+  ): Promise<Array<ScopeEntity>> {
     const data = await this.prisma.scope.findMany({
       take: scopeArgPayload.pagination.take,
       skip: scopeArgPayload.pagination.skip,
-      select: { scope: true },
+      select: { scope: true, id: true },
       where: { scope: { contains: scopeArgPayload?.search?.scope } },
     });
     return data.map((value) => {
-      return value.scope;
+      return new ScopeEntity({ id: value.id, scope: value.scope });
     });
   }
 
-  public async createScope() {
-    throw new NotImplementedException();
+  public async createScope(payload: ScopeArgDto): Promise<ScopeEntity> {
+    await this.checkIfScopeExist(payload);
+    const result = await this.prisma.scope.create({
+      data: { scope: payload.scope },
+      select: { scope: true, id: true },
+    });
+
+    return new ScopeEntity(result);
   }
 
-  public async removeScope() {
-    throw new NotImplementedException();
+  public async removeScope(payload: ScopeArgDto): Promise<ScopeEntity> {
+    const scopeId = await this.checkIfScopeExist(payload);
+    await this.prisma.scope.delete({ where: { id: scopeId.id } });
+    return new ScopeEntity({ scope: payload.scope, id: scopeId.id });
   }
 
   public async assignScopeToUser() {
@@ -34,5 +45,20 @@ export class ScopeManageDaoService {
 
   public async removeScopeFromUser() {
     throw new NotImplementedException();
+  }
+
+  private async checkIfScopeExist(payload: ScopeArgDto) {
+    const data = await this.getScopeId(payload);
+    if (data) {
+      throw new RecordAlreadyExistException();
+    }
+    return data;
+  }
+
+  private async getScopeId(payload: ScopeArgDto) {
+    return this.prisma.scope.findUnique({
+      where: { scope: payload.scope },
+      select: { id: true },
+    });
   }
 }

@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { UserManageDaoService } from './user-manage.dao.service';
 
 describe('AdminManageDaoService', () => {
@@ -6,7 +7,7 @@ describe('AdminManageDaoService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserManageDaoService],
+      providers: [UserManageDaoService, PrismaService],
     }).compile();
 
     service = module.get<UserManageDaoService>(UserManageDaoService);

@@ -1,6 +1,7 @@
 import { Args, ObjectType, ResolveField, Resolver } from '@nestjs/graphql';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { UserSearchArgDto } from 'src/admin/dto/user/search/user-search.arg.dto';
+import { ScopeEntity } from 'src/admin/entities/scope.entity';
 import { UserEntity } from 'src/admin/entities/user.entity';
 import { AdminService } from 'src/admin/services/admin.service';
 
@@ -19,7 +20,7 @@ export class UserManageQueriesResolver {
     return this.adminService.getAllUser(userArgPayload);
   }
 
-  @ResolveField(() => [String])
+  @ResolveField(() => [ScopeEntity])
   public async scopes(
     @Args('input', { nullable: true })
     scopeArgPayload: ScopeSearchArgDto = new ScopeSearchArgDto(),

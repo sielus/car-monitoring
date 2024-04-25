@@ -2,14 +2,14 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 type UserPayload = {
   login: string;
-  userId: string;
+  id: string;
   scope: string[];
 };
 
 @ObjectType()
 export class UserEntity {
   constructor(payload: UserPayload) {
-    this.id = payload.userId;
+    this.id = payload.id;
     this.login = payload.login;
     this.scope = payload.scope;
   }

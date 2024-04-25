@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { ScopeArgDto } from 'src/admin/dto/scope/create/scope.arg.dto';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { UserSearchArgDto } from 'src/admin/dto/user/search/user-search.arg.dto';
+import { ScopeEntity } from 'src/admin/entities/scope.entity';
 import { UserEntity } from 'src/admin/entities/user.entity';
 import { ScopeManageService } from 'src/admin/services/scope-manage/scope-manage.service';
 import { UserManageService } from 'src/admin/services/user-manage/user-manage.service';
@@ -20,16 +22,16 @@ export class AdminService {
 
   public async getAllScopes(
     scopeArgPayload: ScopeSearchArgDto,
-  ): Promise<Array<string>> {
+  ): Promise<Array<ScopeEntity>> {
     return this.scopeManageService.getAllScopes(scopeArgPayload);
   }
 
-  public async createScope() {
-    await this.scopeManageService.createScope();
+  public async createScope(payload: ScopeArgDto): Promise<ScopeEntity> {
+    return this.scopeManageService.createScope(payload);
   }
 
-  public async removeScope() {
-    await this.scopeManageService.removeScope();
+  public async removeScope(payload: ScopeArgDto): Promise<ScopeEntity> {
+    return this.scopeManageService.removeScope(payload);
   }
 
   public async assignScopeToUser() {

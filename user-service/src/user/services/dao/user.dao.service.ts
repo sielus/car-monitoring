@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserLoginExistException } from 'src/exceptions/user-login-exist.exception';
+import { RecordAlreadyExistException } from 'src/exceptions/record-already-exist.exception';
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
@@ -16,7 +16,7 @@ export class UserDaoService {
     });
 
     if (userData) {
-      throw new UserLoginExistException();
+      throw new RecordAlreadyExistException();
     }
     await this.prisma.user.create({
       data: { login: payload.login, password: payload.password },

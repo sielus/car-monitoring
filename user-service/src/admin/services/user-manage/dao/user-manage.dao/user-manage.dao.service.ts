@@ -34,7 +34,7 @@ export class UserManageDaoService {
     return data.map((value) => {
       return new UserEntity({
         login: value.login,
-        userId: value.id,
+        id: value.id,
         scope: value.scopes.map((value) => {
           return value.scope.scope;
         }),
