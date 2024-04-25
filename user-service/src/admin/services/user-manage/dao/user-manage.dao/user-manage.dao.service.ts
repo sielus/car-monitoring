@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserArgDto } from 'src/admin/dto/user/user.arg.dto';
+import { UserSearchArgDto } from 'src/admin/dto/user/search/user-search.arg.dto';
 import { UserEntity } from 'src/admin/entities/user.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -9,7 +9,7 @@ export class UserManageDaoService {
 
   //TODO prepare selector for creating dynamic select based on selected fields in gql entity
   public async getAllUser(
-    userArgPayload: UserArgDto,
+    userArgPayload: UserSearchArgDto,
   ): Promise<Array<UserEntity>> {
     const data = await this.prisma.user.findMany({
       take: userArgPayload.pagination.take,

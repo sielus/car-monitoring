@@ -1,7 +1,5 @@
-import { UseGuards } from '@nestjs/common';
 import { ObjectType, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { UserManageQueries } from 'src/admin/resolvers/user-manage.queries.resolver';
-import { GraphqlAuthGuard, Scope } from 'src/guard/graphql-auth.guard';
 
 @ObjectType()
 export class AdminQueries {}

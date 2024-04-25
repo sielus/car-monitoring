@@ -1,5 +1,5 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
-import { ScopeArgDto } from 'src/admin/dto/scope/scope.arg.dto';
+import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -7,7 +7,7 @@ export class ScopeManageDaoService {
   constructor(private readonly prisma: PrismaService) {}
 
   public async getAllScopes(
-    scopeArgPayload: ScopeArgDto,
+    scopeArgPayload: ScopeSearchArgDto,
   ): Promise<Array<string>> {
     const data = await this.prisma.scope.findMany({
       take: scopeArgPayload.pagination.take,

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ScopeArgDto } from "src/admin/dto/scope/scope.arg.dto";
-import { UserArgDto } from 'src/admin/dto/user/user.arg.dto';
+import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
+import { UserSearchArgDto } from 'src/admin/dto/user/search/user-search.arg.dto';
 import { UserEntity } from 'src/admin/entities/user.entity';
 import { ScopeManageService } from 'src/admin/services/scope-manage/scope-manage.service';
 import { UserManageService } from 'src/admin/services/user-manage/user-manage.service';
@@ -13,13 +13,13 @@ export class AdminService {
   ) {}
 
   public async getAllUser(
-    userArgPayload: UserArgDto,
+    userArgPayload: UserSearchArgDto,
   ): Promise<Array<UserEntity>> {
     return this.userManageService.getAllUser(userArgPayload);
   }
 
   public async getAllScopes(
-    scopeArgPayload: ScopeArgDto,
+    scopeArgPayload: ScopeSearchArgDto,
   ): Promise<Array<string>> {
     return this.scopeManageService.getAllScopes(scopeArgPayload);
   }
