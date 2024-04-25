@@ -5,5 +5,5 @@ import { ScopeFilterArgDto } from 'src/admin/dto/scope/search/scope-filter.arg.d
 @InputType()
 export class ScopeSearchArgDto extends GraphqlArgAbstractDto {
   @Field(() => ScopeFilterArgDto, { nullable: true })
-  search?: ScopeFilterArgDto;
+  search: ScopeFilterArgDto = new ScopeFilterArgDto();
 }

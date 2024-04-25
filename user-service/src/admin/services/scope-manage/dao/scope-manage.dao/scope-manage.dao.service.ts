@@ -3,6 +3,7 @@ import { ScopeArgDto } from 'src/admin/dto/scope/create/scope.arg.dto';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { ScopeEntity } from 'src/admin/entities/scope.entity';
 import { RecordAlreadyExistException } from 'src/exceptions/record-already-exist.exception';
+import { RecordNotFoundException } from 'src/exceptions/record-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -24,7 +25,10 @@ export class ScopeManageDaoService {
   }
 
   public async createScope(payload: ScopeArgDto): Promise<ScopeEntity> {
-    await this.checkIfScopeExist(payload);
+    const data = await this.getScopeId(payload);
+    if (data) {
+      throw new RecordAlreadyExistException();
+    }
     const result = await this.prisma.scope.create({
       data: { scope: payload.scope },
       select: { scope: true, id: true },
@@ -34,7 +38,10 @@ export class ScopeManageDaoService {
   }
 
   public async removeScope(payload: ScopeArgDto): Promise<ScopeEntity> {
-    const scopeId = await this.checkIfScopeExist(payload);
+    const scopeId = await this.getScopeId(payload);
+    if (!scopeId) {
+      throw new RecordNotFoundException();
+    }
     await this.prisma.scope.delete({ where: { id: scopeId.id } });
     return new ScopeEntity({ scope: payload.scope, id: scopeId.id });
   }
@@ -45,14 +52,6 @@ export class ScopeManageDaoService {
 
   public async removeScopeFromUser() {
     throw new NotImplementedException();
-  }
-
-  private async checkIfScopeExist(payload: ScopeArgDto) {
-    const data = await this.getScopeId(payload);
-    if (data) {
-      throw new RecordAlreadyExistException();
-    }
-    return data;
   }
 
   private async getScopeId(payload: ScopeArgDto) {
