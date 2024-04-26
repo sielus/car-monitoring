@@ -5,7 +5,7 @@ This project is currently in progress of development.
 ## Description
 
 ### Main Ideas:
-- Microservices structure
+- Microservices structure (BE apps in NestJS, PostgresqlDB)
 - Communication between services via queue (Kafka or Azure Service Bus)
 - JWT as the main authentication method
 - REST only for authentication, GraphQL for data
