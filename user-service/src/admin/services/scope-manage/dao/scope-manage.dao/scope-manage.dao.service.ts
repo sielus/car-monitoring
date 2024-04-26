@@ -1,4 +1,5 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
+import { ScopeIdArgDto } from 'src/admin/dto/scope/create/scope-id.arg.dto';
 import { ScopeArgDto } from 'src/admin/dto/scope/create/scope.arg.dto';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { ScopeEntity } from 'src/admin/entities/scope.entity';
@@ -25,7 +26,10 @@ export class ScopeManageDaoService {
   }
 
   public async createScope(payload: ScopeArgDto): Promise<ScopeEntity> {
-    const data = await this.getScopeId(payload);
+    const data = await this.prisma.scope.findUnique({
+      where: { scope: payload.scope },
+      select: { id: true },
+    });
     if (data) {
       throw new RecordAlreadyExistException();
     }
@@ -37,13 +41,15 @@ export class ScopeManageDaoService {
     return new ScopeEntity(result);
   }
 
-  public async removeScope(payload: ScopeArgDto): Promise<ScopeEntity> {
-    const scopeId = await this.getScopeId(payload);
-    if (!scopeId) {
+  public async removeScope(payload: ScopeIdArgDto): Promise<ScopeEntity> {
+    const scopeData = await this.prisma.scope.findUnique({
+      where: { id: payload.scopeId },
+    });
+    if (!scopeData) {
       throw new RecordNotFoundException();
     }
-    await this.prisma.scope.delete({ where: { id: scopeId.id } });
-    return new ScopeEntity({ scope: payload.scope, id: scopeId.id });
+    await this.prisma.scope.delete({ where: { id: scopeData.id } });
+    return new ScopeEntity({ scope: scopeData.scope, id: scopeData.id });
   }
 
   public async assignScopeToUser() {
@@ -52,12 +58,5 @@ export class ScopeManageDaoService {
 
   public async removeScopeFromUser() {
     throw new NotImplementedException();
-  }
-
-  private async getScopeId(payload: ScopeArgDto) {
-    return this.prisma.scope.findUnique({
-      where: { scope: payload.scope },
-      select: { id: true },
-    });
   }
 }

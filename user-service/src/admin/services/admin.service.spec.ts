@@ -59,7 +59,10 @@ describe('UserManageAdminService', () => {
 
       test('should remove scope', async () => {
         try {
-          const result = await service.removeScope({ scope: mockScope });
+          const scopeId = await prisma.scope.findUnique({
+            where: { scope: mockScope },
+          });
+          const result = await service.removeScope({ scopeId: scopeId.id });
           expect(result).toBeInstanceOf(ScopeEntity);
 
           const newResult = await prisma.scope.findUnique({
