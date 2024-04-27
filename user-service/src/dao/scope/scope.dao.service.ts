@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { isNullish } from 'remeda';
+import { isEmpty, isNullish } from 'remeda';
 import { ScopeIdArgDto } from 'src/admin/dto/scope/handle/scope-id.arg.dto';
 import { ScopeArgDto } from 'src/admin/dto/scope/handle/scope.arg.dto';
 import { UserScopeRelationArgDto } from 'src/admin/dto/scope/handle/user-scope-relation.arg.dto';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { ScopeEntity } from 'src/admin/entities/scope.entity';
 import { ScopeExistException } from 'src/exceptions/scope-exist.exception';
+import { ScopeHaveRelationsException } from 'src/exceptions/scope-have-relations.exception';
 import { ScopeNotFoundException } from 'src/exceptions/scope-not-found.exception';
 import { UserScopeRelationExistException } from 'src/exceptions/user-scope-relation-exist.exception';
 import { UserScopeRelationNotFoundException } from 'src/exceptions/user-scope-relation-not-found.exception';
@@ -52,6 +53,13 @@ export class ScopeDaoService {
     });
     if (isNullish(scopeData)) {
       throw new ScopeNotFoundException();
+    }
+    const scopeRelations = await this.prisma.userScopeRelation.findMany({
+      where: { scopeId: payload.scopeId },
+    });
+
+    if (!isEmpty(scopeRelations)) {
+      throw new ScopeHaveRelationsException();
     }
     await this.prisma.scope.delete({ where: { id: scopeData.id } });
     return new ScopeEntity({ scope: scopeData.scope, id: scopeData.id });
