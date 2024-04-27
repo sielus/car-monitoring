@@ -1,12 +1,4 @@
-import {
-  Args,
-  Mutation,
-  ObjectType,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
-import { ScopeIdArgDto } from 'src/admin/dto/scope/create/scope-id.arg.dto';
-import { ScopeArgDto } from 'src/admin/dto/scope/create/scope.arg.dto';
+import { Args, ObjectType, ResolveField, Resolver } from '@nestjs/graphql';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { UserSearchArgDto } from 'src/admin/dto/user/search/user-search.arg.dto';
 import { ScopeEntity } from 'src/admin/entities/scope.entity';
@@ -34,21 +26,5 @@ export class UserManageQueriesResolver {
     payload: ScopeSearchArgDto = new ScopeSearchArgDto(),
   ) {
     return this.adminService.getAllScopes(payload);
-  }
-
-  @Mutation(() => ScopeEntity)
-  public async createScope(
-    @Args('input', { nullable: true })
-    payload: ScopeArgDto,
-  ) {
-    return this.adminService.createScope(payload);
-  }
-
-  @Mutation(() => ScopeEntity)
-  public async removeScope(
-    @Args('input', { nullable: true })
-    payload: ScopeIdArgDto,
-  ) {
-    return this.adminService.removeScope(payload);
   }
 }

@@ -5,7 +5,7 @@ import { UserManageQueries } from 'src/admin/resolvers/user-manage.queries.resol
 export class AdminQueries {}
 
 @Resolver(AdminQueries)
-export class AdminResolver {
+export class AdminMutationsResolver {
   // @UseGuards(GraphqlAuthGuard)
   // @Scope('admin')
   @Query(() => AdminQueries)
@@ -14,7 +14,7 @@ export class AdminResolver {
   }
 
   @ResolveField(() => UserManageQueries, { name: 'userManage' })
-  public async user() {
+  public async userManageMutations() {
     return new UserManageQueries();
   }
 }

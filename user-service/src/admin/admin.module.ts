@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AdminResolver } from 'src/admin/admin-resolver.queries.resolver';
+import { AdminQueriesResolver } from 'src/admin/admin-resolver.mutations.resolver';
+import { AdminMutationsResolver } from 'src/admin/admin-resolver.queries.resolver';
+import { ScopeManageMutationsResolver } from 'src/admin/resolvers/scope-manage.mutations.resolver';
 import { UserManageQueriesResolver } from 'src/admin/resolvers/user-manage.queries.resolver';
 import { AdminService } from 'src/admin/services/admin.service';
 import { ScopeManageDaoService } from 'src/admin/services/scope-manage/dao/scope-manage.dao/scope-manage.dao.service';
@@ -18,8 +20,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
     UserManageDaoService,
     UserManageService,
     ScopeManageService,
-    AdminResolver,
+    AdminMutationsResolver,
+    AdminQueriesResolver,
     UserManageQueriesResolver,
+    ScopeManageMutationsResolver,
   ],
 })
 export class AdminModule {}
