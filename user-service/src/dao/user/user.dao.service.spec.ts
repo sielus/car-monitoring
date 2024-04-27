@@ -1,19 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserManageDaoService } from 'src/dao/user/user-manage.dao/user-manage.dao.service';
-import { UserLoginExistException } from 'src/exceptions/user-login-exist.exception';
+import { UserDaoService } from 'src/dao/user/user.dao.service';
+import { UserExistException } from 'src/exceptions/user-exist.exception';
+
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UpdateUserConfigDto } from 'src/user/dto/update-user.config.dto';
 
 describe('UserManageDaoService', () => {
-  let service: UserManageDaoService;
+  let service: UserDaoService;
   let prisma: PrismaService;
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserManageDaoService, PrismaService],
+      providers: [UserDaoService, PrismaService],
     }).compile();
 
-    service = module.get<UserManageDaoService>(UserManageDaoService);
+    service = module.get<UserDaoService>(UserDaoService);
     prisma = module.get<PrismaService>(PrismaService);
   });
 
@@ -42,7 +43,7 @@ describe('UserManageDaoService', () => {
       try {
         await service.createUser(mockCreateUser);
       } catch (exception) {
-        expect(exception).toBeInstanceOf(UserLoginExistException);
+        expect(exception).toBeInstanceOf(UserExistException);
       }
     });
   });
