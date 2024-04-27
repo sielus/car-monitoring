@@ -1,11 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
-import { UserEventDaoService } from 'src/cron-jobs/services/dao/user-event/user-event.dao.service';
-import { UserScopeRelationEventService } from 'src/cron-jobs/services/dao/user-scope-relation.event/user-scope-relation.event.service';
+import { Injectable } from '@nestjs/common';
 import { UserRemovePayloadEvent } from 'src/cron-jobs/services/events/dto/user-remove-payload.event';
 import { UserScopeRelationPayloadEvent } from 'src/cron-jobs/services/events/dto/user-scope-relation-payload.event';
 import { UserUpsertPayloadEvent } from 'src/cron-jobs/services/events/dto/user-upsert-payload.event';
 import { EventSenderService } from 'src/cron-jobs/services/events/event-sender/event-sender.service';
+import { UserEventDaoService } from 'src/dao/user-event/user-event.dao.service';
+import { UserScopeRelationEventService } from 'src/dao/user-scope-relation.event/user-scope-relation.event.service';
 
 @Injectable()
 export class CronJobsService {

@@ -5,6 +5,7 @@ export class UserUpsertPayloadEvent extends EventPayloadAbstract {
     super();
     this.data = userDetails;
   }
+
   data: UserDetails;
 }
 
