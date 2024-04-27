@@ -4,14 +4,14 @@ import { UserScopeRelationPayloadEvent } from 'src/cron-jobs/services/events/dto
 import { UserUpsertPayloadEvent } from 'src/cron-jobs/services/events/dto/user-upsert-payload.event';
 import { EventSenderService } from 'src/cron-jobs/services/events/event-sender/event-sender.service';
 import { UserEventDaoService } from 'src/dao/user-event/user-event.dao.service';
-import { UserScopeRelationEventService } from 'src/dao/user-scope-relation.event/user-scope-relation.event.service';
+import { UserScopeRelationDaoService } from 'src/dao/user-scope-relation/user-scope-relation.dao.service';
 
 @Injectable()
 export class CronJobsService {
   constructor(
     private readonly eventSender: EventSenderService,
     private readonly userEventDao: UserEventDaoService,
-    private readonly userScopeRelationEventDao: UserScopeRelationEventService,
+    private readonly userScopeRelationEventDao: UserScopeRelationDaoService,
   ) {}
 
   public async sendUserUpsertEvents() {

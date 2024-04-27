@@ -24,4 +24,4 @@ This project is currently in progress of development.
 - Angular frontend app (for admin and user)
 
 Proof of Concept of Architecture
-![POC services architecture](https://github.com/sielus/car-monitoring/blob/main/Untitled%20Diagram.jpg?raw=true)
+![POC services architecture](![image](https://github.com/sielus/car-monitoring/assets/52858922/7a566174-36e6-45c1-8a90-25d75e1dd3f5)

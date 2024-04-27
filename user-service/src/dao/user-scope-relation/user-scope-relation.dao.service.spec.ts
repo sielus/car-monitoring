@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserScopeRelationEventService } from 'src/dao/user-scope-relation.event/user-scope-relation.event.service';
+import { UserScopeRelationDaoService } from 'src/dao/user-scope-relation/user-scope-relation.dao.service';
 
 describe('UserScopeRelationEventService', () => {
-  let service: UserScopeRelationEventService;
+  let service: UserScopeRelationDaoService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserScopeRelationEventService],
+      providers: [UserScopeRelationDaoService],
     }).compile();
 
-    service = module.get<UserScopeRelationEventService>(
-      UserScopeRelationEventService,
+    service = module.get<UserScopeRelationDaoService>(
+      UserScopeRelationDaoService,
     );
   });
 
