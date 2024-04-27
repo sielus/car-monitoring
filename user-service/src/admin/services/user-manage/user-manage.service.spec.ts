@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserManageDaoService } from 'src/admin/services/user-manage/dao/user-manage.dao/user-manage.dao.service';
+import { UserManageDaoService } from 'src/admin/dao/user-manage.dao/user-manage.dao.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserManageService } from './user-manage.service';
 

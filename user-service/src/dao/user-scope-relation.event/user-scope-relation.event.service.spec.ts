@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserScopeRelationEventService } from './user-scope-relation.event.service';
+import { UserScopeRelationEventService } from 'src/dao/user-scope-relation.event/user-scope-relation.event.service';
 
 describe('UserScopeRelationEventService', () => {
   let service: UserScopeRelationEventService;

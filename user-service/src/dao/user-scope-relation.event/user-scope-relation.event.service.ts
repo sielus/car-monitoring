@@ -3,7 +3,7 @@ import {
   UserScopeRelationData,
   UserScopeRelationPayloadEvent,
 } from 'src/cron-jobs/services/events/dto/user-scope-relation-payload.event';
-import { RecordNotFoundException } from 'src/exceptions/record-not-found.exception';
+import { UserScopeRelationNotFoundException } from 'src/exceptions/user-scope-relation-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -60,7 +60,7 @@ export class UserScopeRelationEventService {
       select: { id: true },
     });
     if (!record) {
-      throw new RecordNotFoundException();
+      throw new UserScopeRelationNotFoundException();
     }
     return record;
   }

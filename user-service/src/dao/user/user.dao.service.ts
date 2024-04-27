@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { RecordAlreadyExistException } from 'src/exceptions/record-already-exist.exception';
+import { isNullish } from 'remeda';
+import { UserSearchArgDto } from 'src/admin/dto/user/search/user-search.arg.dto';
+import { UserEntity } from 'src/admin/entities/user.entity';
+import { UserExistException } from 'src/exceptions/user-exist.exception';
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
@@ -16,7 +19,7 @@ export class UserDaoService {
     });
 
     if (userData) {
-      throw new RecordAlreadyExistException();
+      throw new UserExistException();
     }
     await this.prisma.user.create({
       data: { login: payload.login, password: payload.password },
@@ -50,7 +53,7 @@ export class UserDaoService {
     });
   }
 
-  private async checkIfUserIdExist(userId: string) {
+  public async checkIfUserIdExist(userId: string) {
     const userData = await this.prisma.user.findUnique({
       where: { id: userId, isRemoved: false },
       select: { id: true },
@@ -58,5 +61,50 @@ export class UserDaoService {
     if (!userData) {
       throw new UserNotFoundException();
     }
+  }
+
+  public async getAllUser(
+    userArgPayload: UserSearchArgDto,
+  ): Promise<Array<UserEntity>> {
+    const query = [];
+
+    if (!isNullish(userArgPayload?.search?.scope)) {
+      query.push({
+        scopes: {
+          some: {
+            scope: { scope: { in: userArgPayload?.search?.scope } },
+          },
+        },
+      });
+    }
+
+    if (!isNullish(userArgPayload?.search?.login)) {
+      query.push({ login: { in: userArgPayload?.search?.login } });
+    }
+
+    if (!isNullish(userArgPayload?.search?.userId)) {
+      query.push({ id: { in: userArgPayload?.search?.userId } });
+    }
+    const data = await this.prisma.user.findMany({
+      take: userArgPayload.pagination.take,
+      skip: userArgPayload.pagination.skip,
+      where: {
+        AND: query,
+      },
+      select: {
+        id: true,
+        login: true,
+        scopes: { select: { scope: { select: { scope: true, id: true } } } },
+      },
+    });
+    return data.map((value) => {
+      return new UserEntity({
+        login: value.login,
+        id: value.id,
+        scope: value.scopes.map((value) => {
+          return { scope: value.scope.scope, id: value.scope.id };
+        }),
+      });
+    });
   }
 }

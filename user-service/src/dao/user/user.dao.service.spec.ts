@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserManageDaoService } from 'src/dao/user/user-manage.dao/user-manage.dao.service';
 import { UserLoginExistException } from 'src/exceptions/user-login-exist.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UpdateUserConfigDto } from 'src/user/dto/update-user.config.dto';
-import { UserManageDaoService } from 'src/user/services/dao/user-manage.dao/user-manage.dao.service';
 
 describe('UserManageDaoService', () => {
   let service: UserManageDaoService;

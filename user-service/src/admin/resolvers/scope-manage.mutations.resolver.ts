@@ -1,8 +1,9 @@
-import { NotImplementedException } from '@nestjs/common';
 import { Args, ObjectType, ResolveField, Resolver } from '@nestjs/graphql';
-import { ScopeIdArgDto } from 'src/admin/dto/scope/create/scope-id.arg.dto';
-import { ScopeArgDto } from 'src/admin/dto/scope/create/scope.arg.dto';
+import { ScopeIdArgDto } from 'src/admin/dto/scope/handle/scope-id.arg.dto';
+import { ScopeArgDto } from 'src/admin/dto/scope/handle/scope.arg.dto';
+import { UserScopeRelationArgDto } from 'src/admin/dto/scope/handle/user-scope-relation.arg.dto';
 import { ScopeEntity } from 'src/admin/entities/scope.entity';
+import { UserEntity } from 'src/admin/entities/user.entity';
 import { AdminService } from 'src/admin/services/admin.service';
 
 @ObjectType()
@@ -28,13 +29,19 @@ export class ScopeManageMutationsResolver {
     return this.adminService.removeScope(payload);
   }
 
-  @ResolveField('addToUser', () => ScopeEntity)
-  public async createUserScopeRelation() {
-    throw new NotImplementedException();
+  @ResolveField('addToUser', () => UserEntity)
+  public async createUserScopeRelation(
+    @Args('input', { nullable: false })
+    payload: UserScopeRelationArgDto,
+  ) {
+    return this.adminService.addScopeToUser(payload);
   }
 
-  @ResolveField('removeFromUser', () => ScopeEntity)
-  public async removeUserScopeRelation() {
-    throw new NotImplementedException();
+  @ResolveField('removeFromUser', () => UserEntity)
+  public async removeUserScopeRelation(
+    @Args('input', { nullable: false })
+    payload: UserScopeRelationArgDto,
+  ) {
+    return this.adminService.removeScopeFromUser(payload);
   }
 }

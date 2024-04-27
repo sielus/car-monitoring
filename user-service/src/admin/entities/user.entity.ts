@@ -1,9 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { ScopeEntity } from 'src/admin/entities/scope.entity';
 
 type UserPayload = {
   login: string;
   id: string;
-  scope: string[];
+  scope: ScopeEntity[];
 };
 
 @ObjectType()
@@ -20,6 +21,6 @@ export class UserEntity {
   @Field(() => String, { nullable: false })
   login?: string;
 
-  @Field(() => [String], { nullable: false })
-  scope?: string[];
+  @Field(() => [ScopeEntity], { nullable: false })
+  scope?: ScopeEntity[];
 }

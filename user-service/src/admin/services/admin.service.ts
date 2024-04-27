@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ScopeIdArgDto } from 'src/admin/dto/scope/create/scope-id.arg.dto';
-import { ScopeArgDto } from 'src/admin/dto/scope/create/scope.arg.dto';
+import { ScopeIdArgDto } from 'src/admin/dto/scope/handle/scope-id.arg.dto';
+import { ScopeArgDto } from 'src/admin/dto/scope/handle/scope.arg.dto';
+import { UserScopeRelationArgDto } from 'src/admin/dto/scope/handle/user-scope-relation.arg.dto';
 import { ScopeSearchArgDto } from 'src/admin/dto/scope/search/scope-search.arg.dto';
 import { UserSearchArgDto } from 'src/admin/dto/user/search/user-search.arg.dto';
 import { ScopeEntity } from 'src/admin/entities/scope.entity';
@@ -35,11 +36,15 @@ export class AdminService {
     return this.scopeManageService.removeScope(payload);
   }
 
-  public async assignScopeToUser() {
-    await this.scopeManageService.assignScopeToUser();
+  public async addScopeToUser(
+    payload: UserScopeRelationArgDto,
+  ): Promise<UserEntity> {
+    return this.scopeManageService.addScopeToUser(payload);
   }
 
-  public async removeScopeFromUser() {
-    await this.scopeManageService.removeScopeFromUser();
+  public async removeScopeFromUser(
+    payload: UserScopeRelationArgDto,
+  ): Promise<UserEntity> {
+    return this.scopeManageService.removeScopeFromUser(payload);
   }
 }

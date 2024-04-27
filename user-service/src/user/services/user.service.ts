@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { UserDaoService } from 'src/dao/user/user.dao.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UpdateUserConfigDto } from 'src/user/dto/update-user.config.dto';
-import { UserDaoService } from 'src/user/services/dao/user.dao.service';
 
 @Injectable()
 export class UserService {

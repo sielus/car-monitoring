@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserEventDaoService } from './user-event.dao.service';
+import { UserEventDaoService } from 'src/dao/user-event/user-event.dao.service';
 
 describe('UserEventDaoService', () => {
   let service: UserEventDaoService;

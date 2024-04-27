@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ScopeDaoService } from 'src/dao/scope/scope.dao.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserManageDaoService } from './user-manage.dao.service';
 
-describe('AdminManageDaoService', () => {
-  let service: UserManageDaoService;
+describe('ScopeManageDaoService', () => {
+  let service: ScopeDaoService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserManageDaoService, PrismaService],
+      providers: [ScopeDaoService, PrismaService],
     }).compile();
 
-    service = module.get<UserManageDaoService>(UserManageDaoService);
+    service = module.get<ScopeDaoService>(ScopeDaoService);
   });
 
   it('should be defined', () => {
