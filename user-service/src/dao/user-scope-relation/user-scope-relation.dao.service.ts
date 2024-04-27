@@ -7,7 +7,7 @@ import { UserScopeRelationNotFoundException } from 'src/exceptions/user-scope-re
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class UserScopeRelationEventService {
+export class UserScopeRelationDaoService {
   constructor(private readonly prisma: PrismaService) {}
 
   public async getUnPublishedCreateUserScopeRelation(): Promise<

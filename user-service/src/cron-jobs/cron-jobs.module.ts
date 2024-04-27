@@ -5,8 +5,8 @@ import { CronJobsController } from 'src/cron-jobs/cron-jobs.controller';
 import { CronJobsService } from 'src/cron-jobs/cron-jobs.service';
 import { EventSenderService } from 'src/cron-jobs/services/events/event-sender/event-sender.service';
 import { UserEventDaoService } from 'src/dao/user-event/user-event.dao.service';
+import { UserScopeRelationDaoService } from 'src/dao/user-scope-relation/user-scope-relation.dao.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserScopeRelationEventService } from '../dao/user-scope-relation.event/user-scope-relation.event.service';
 
 @Module({
   imports: [ClientsModule.register([microserviceConfig])],
@@ -16,7 +16,7 @@ import { UserScopeRelationEventService } from '../dao/user-scope-relation.event/
     EventSenderService,
     UserEventDaoService,
     PrismaService,
-    UserScopeRelationEventService,
+    UserScopeRelationDaoService,
   ],
 })
 export class CronJobsModule {}
