@@ -5,10 +5,10 @@ import { EventPayloadAbstract } from "src/dto/event-payload.abstract";
  * @interface
  */
 export interface UserScopeRelationPayloadEventDto extends EventPayloadAbstract {
-    data: UserScopeRelationData;
+    data: UserScopeRelationDataDto;
 }
 
-export interface UserScopeRelationData {
+export interface UserScopeRelationDataDto {
     /**
      * The ID of the user from User-Service
      * @type {string}

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserScopeRelationPayloadEvent } from '@sielus/events-lib';
+import { UserScopeRelationPayloadEventDto } from '@sielus/events-lib';
 import { RecordNotFoundException } from 'src/exceptions/record-not-found.exception';
 import { PrismaService } from 'src/prisma.service';
 
@@ -7,7 +7,7 @@ import { PrismaService } from 'src/prisma.service';
 export class UserScopeRelationEventDaoService {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async handleCreateEvent(event: UserScopeRelationPayloadEvent) {
+  public async handleCreateEvent(event: UserScopeRelationPayloadEventDto) {
     await this.prisma.userScopeRelation.create({
       data: {
         user: {
@@ -25,7 +25,7 @@ export class UserScopeRelationEventDaoService {
     });
   }
 
-  public async handleRemoveEvent(event: UserScopeRelationPayloadEvent) {
+  public async handleRemoveEvent(event: UserScopeRelationPayloadEventDto) {
     const recordId = await this.getRecordId(event);
     await this.prisma.userScopeRelation.delete({
       where: {
@@ -34,7 +34,7 @@ export class UserScopeRelationEventDaoService {
     });
   }
 
-  private async getRecordId(event: UserScopeRelationPayloadEvent) {
+  private async getRecordId(event: UserScopeRelationPayloadEventDto) {
     const recordId = await this.prisma.userScopeRelation.findFirst({
       where: {
         scope: { scope: event.data.scope },

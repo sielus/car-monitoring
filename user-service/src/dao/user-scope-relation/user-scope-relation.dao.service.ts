@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
-  UserScopeRelationData,
-  UserScopeRelationPayloadEvent,
+  UserScopeRelationDataDto,
+  UserScopeRelationPayloadEventDto,
 } from '@sielus/events-lib';
 
 import { UserScopeRelationNotFoundException } from 'src/exceptions/user-scope-relation-not-found.exception';
@@ -12,14 +12,14 @@ export class UserScopeRelationDaoService {
   constructor(private readonly prisma: PrismaService) {}
 
   public async getUnPublishedCreateUserScopeRelation(): Promise<
-    UserScopeRelationPayloadEvent[]
+    UserScopeRelationPayloadEventDto[]
   > {
     const data = await this.prisma.userScopeRelation.findMany({
       where: { isPublished: false, isRemoved: false },
       select: { userId: true, scope: { select: { scope: true } } },
     });
 
-    const events: UserScopeRelationPayloadEvent[] = [];
+    const events: UserScopeRelationPayloadEventDto[] = [];
 
     data.forEach((record) => {
       events.push({
@@ -34,14 +34,14 @@ export class UserScopeRelationDaoService {
   }
 
   public async getUnPublishedRemoveUserScopeRelation(): Promise<
-    UserScopeRelationPayloadEvent[]
+    UserScopeRelationPayloadEventDto[]
   > {
     const data = await this.prisma.userScopeRelation.findMany({
       where: { isPublished: false, isRemoved: true },
       select: { userId: true, scope: { select: { scope: true } } },
     });
 
-    const events: UserScopeRelationPayloadEvent[] = [];
+    const events: UserScopeRelationPayloadEventDto[] = [];
 
     data.forEach((record) => {
       events.push({
@@ -56,7 +56,7 @@ export class UserScopeRelationDaoService {
   }
 
   public async updateIsPublishedScopeRelationStatus(
-    data: UserScopeRelationData,
+    data: UserScopeRelationDataDto,
     isPublished: boolean,
   ) {
     const recordId = await this.getRecordId(data);
@@ -66,7 +66,7 @@ export class UserScopeRelationDaoService {
     });
   }
 
-  private async getRecordId(data: UserScopeRelationData) {
+  private async getRecordId(data: UserScopeRelationDataDto) {
     const record = await this.prisma.userScopeRelation.findFirst({
       where: {
         userId: data.userId,
