@@ -25,6 +25,7 @@ This project is currently in progress of development.
 - Static values like user permissions, user relations, etc., updated/handled by CRON
 - Dynamic values like car location: directly added into the queue
 - Frontend applications in Angular (Admin and User/Customer)
+- Prepare configs for Kubernetes(?)
 
 ## Features (To Be Implemented)
 
