@@ -2,6 +2,19 @@
 
 This project is currently in progress of development.
 
+
+### Current status:
+- npm libs for events types and list of topics
+- npm lib for guard (handling jwt token + scopes for permissions)
+- Auth Service => 
+  - handling events for upsert / remove user and user-scope relation from user-service
+  - generating jwk token for user
+  
+- User Service =>
+    - sending events for upsert / remove user and user-scope relation
+    - rest api for user: create/update/remove user data
+    - graphql for admin: all users list, updating user-scope relation, creating / removing scopes
+
 ## Description
 
 ### Main Ideas:
