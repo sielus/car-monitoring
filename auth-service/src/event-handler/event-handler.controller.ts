@@ -1,13 +1,13 @@
 import { Controller, Inject } from '@nestjs/common';
+import { ClientKafka, EventPattern, Payload } from '@nestjs/microservices';
 import {
-  ClientKafka,
-  EventPattern,
-  MessagePattern,
-  Payload,
-} from '@nestjs/microservices';
-import { UserRemovePayloadEvent } from 'src/event-handler/dto/user-remove-payload.event';
-import { UserScopeRelationPayloadEvent } from 'src/event-handler/dto/user-scope-relation-payload.event';
-import { UserUpsertPayloadEvent } from 'src/event-handler/dto/user-upsert-payload.event';
+  services,
+  topics,
+  UserRemovePayloadEvent,
+  UserScopeRelationPayloadEvent,
+  UserUpsertPayloadEvent,
+} from '@sielus/events-lib';
+
 import { EventHandlerService } from 'src/event-handler/event-handler.service';
 
 @Controller()
@@ -17,28 +17,32 @@ export class EventHandlerController {
     private readonly eventHandlerService: EventHandlerService,
   ) {}
 
-  @EventPattern('user-service.upsert-user')
+  @EventPattern(`${services.userService}.${topics.upsertUserTopic}`)
   public async handleCreateUserEvent(
     @Payload() event: { event: UserUpsertPayloadEvent },
   ) {
     await this.eventHandlerService.upsertUser(event.event);
   }
 
-  @EventPattern('user-service.remove-user')
+  @EventPattern(`${services.userService}.${topics.removeUserTopic}`)
   public async handleUpdateUserEvent(
     @Payload() event: { event: UserRemovePayloadEvent },
   ) {
     await this.eventHandlerService.removeUser(event.event);
   }
 
-  @EventPattern('user-service.create-user-scope-relation')
+  @EventPattern(
+    `${services.userService}.${topics.createUserScopeRelationTopic}`,
+  )
   public async handleCreateUserScopeRelationEvent(
     @Payload() event: { event: UserScopeRelationPayloadEvent },
   ) {
     await this.eventHandlerService.createUserScoreRelation(event.event);
   }
 
-  @EventPattern('user-service.remove-user-scope-relation')
+  @EventPattern(
+    `${services.userService}.${topics.removeUserScopeRelationTopic}`,
+  )
   public async handleRemoveUserScopeRelationEvent(
     @Payload() event: { event: UserScopeRelationPayloadEvent },
   ) {

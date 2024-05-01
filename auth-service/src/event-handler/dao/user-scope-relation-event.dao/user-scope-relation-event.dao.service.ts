@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserScopeRelationPayloadEvent } from 'src/event-handler/dto/user-scope-relation-payload.event';
+import { UserScopeRelationPayloadEvent } from '@sielus/events-lib';
 import { RecordNotFoundException } from 'src/exceptions/record-not-found.exception';
 import { PrismaService } from 'src/prisma.service';
 

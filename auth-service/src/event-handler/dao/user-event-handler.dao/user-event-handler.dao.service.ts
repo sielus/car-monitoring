@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UserRemovePayloadEvent } from 'src/event-handler/dto/user-remove-payload.event';
-import { UserUpsertPayloadEvent } from 'src/event-handler/dto/user-upsert-payload.event';
+import {
+  UserRemovePayloadEvent,
+  UserUpsertPayloadEvent,
+} from '@sielus/events-lib';
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma.service';
 

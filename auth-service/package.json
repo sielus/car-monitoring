@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.3.1",
     "@prisma/client": "^5.12.1",
+    "@sielus/events-lib": "file:../events-lib",
     "kafkajs": "^2.2.4",
     "prisma": "^5.12.1",
     "reflect-metadata": "^0.2.0",

@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import {
   UserScopeRelationData,
   UserScopeRelationPayloadEvent,
-} from 'src/cron-jobs/services/events/dto/user-scope-relation-payload.event';
+} from '@sielus/events-lib';
+
 import { UserScopeRelationNotFoundException } from 'src/exceptions/user-scope-relation-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -18,26 +19,40 @@ export class UserScopeRelationDaoService {
       select: { userId: true, scope: { select: { scope: true } } },
     });
 
-    return data.map((value) => {
-      return new UserScopeRelationPayloadEvent({
-        userId: value.userId,
-        scope: value.scope.scope,
+    const events: UserScopeRelationPayloadEvent[] = [];
+
+    data.forEach((record) => {
+      events.push({
+        createdAt: new Date(),
+        data: {
+          userId: record.userId,
+          scope: record.scope.scope,
+        },
       });
     });
+    return events;
   }
 
-  public async getUnPublishedRemoveUserScopeRelation() {
+  public async getUnPublishedRemoveUserScopeRelation(): Promise<
+    UserScopeRelationPayloadEvent[]
+  > {
     const data = await this.prisma.userScopeRelation.findMany({
       where: { isPublished: false, isRemoved: true },
       select: { userId: true, scope: { select: { scope: true } } },
     });
 
-    return data.map((value) => {
-      return new UserScopeRelationPayloadEvent({
-        userId: value.userId,
-        scope: value.scope.scope,
+    const events: UserScopeRelationPayloadEvent[] = [];
+
+    data.forEach((record) => {
+      events.push({
+        createdAt: new Date(),
+        data: {
+          userId: record.userId,
+          scope: record.scope.scope,
+        },
       });
     });
+    return events;
   }
 
   public async updateIsPublishedScopeRelationStatus(
