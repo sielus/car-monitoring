@@ -33,6 +33,7 @@
     "@nestjs/schedule": "^4.0.2",
     "@nestjs/swagger": "^7.3.1",
     "@prisma/client": "^5.12.1",
+    "@sielus/auth": "file:../auth-lib",
     "graphql": "^16.8.1",
     "kafkajs": "^2.2.4",
     "prisma": "^5.12.1",

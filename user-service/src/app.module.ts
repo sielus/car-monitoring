@@ -4,8 +4,8 @@ import {
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { JwtModule } from '@nestjs/jwt';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AuthModule } from '@sielus/auth';
 import { AppController } from 'src/app.controller';
 import { AppService } from 'src/app.service';
 import { CronJobsModule } from 'src/cron-jobs/cron-jobs.module';
@@ -18,11 +18,7 @@ import { UserModule } from './user/user.module';
     CronJobsModule,
     ScheduleModule.forRoot(),
     UserModule,
-    JwtModule.register({
-      publicKey: process.env.JWT_PUBLIC,
-      signOptions: { algorithm: 'RS512' },
-      global: true,
-    }),
+    AuthModule.register(process.env.JWT_PUBLIC),
     AdminModule,
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
@@ -32,5 +28,6 @@ import { UserModule } from './user/user.module';
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
+  exports: [AuthModule],
 })
 export class AppModule {}

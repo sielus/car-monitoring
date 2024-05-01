@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard, Scope } from 'src/guard/auth.guard';
+import { AuthGuard, Scope } from '@sielus/auth';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UpdateUserConfigDto } from 'src/user/dto/update-user.config.dto';
 import { UpdateUserDto } from 'src/user/dto/update-user.dto';
