@@ -9,7 +9,9 @@ describe('UserEventHandlerDaoService', () => {
       providers: [UserEventHandlerDaoService],
     }).compile();
 
-    service = module.get<UserEventHandlerDaoService>(UserEventHandlerDaoService);
+    service = module.get<UserEventHandlerDaoService>(
+      UserEventHandlerDaoService,
+    );
   });
 
   it('should be defined', () => {

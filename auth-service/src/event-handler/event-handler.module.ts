@@ -10,6 +10,11 @@ import { UserScopeRelationEventDaoService } from './dao/user-scope-relation-even
 @Module({
   imports: [ClientsModule.register([microserviceConfig])],
   controllers: [EventHandlerController],
-  providers: [EventHandlerService, PrismaService, UserEventHandlerDaoService, UserScopeRelationEventDaoService],
+  providers: [
+    EventHandlerService,
+    PrismaService,
+    UserEventHandlerDaoService,
+    UserScopeRelationEventDaoService,
+  ],
 })
 export class EventHandlerModule {}
