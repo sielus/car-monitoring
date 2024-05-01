@@ -4,7 +4,7 @@ import { EventPayloadAbstract } from "src/dto/event-payload.abstract";
  * Represents the payload event for create/remove user scope relation.
  * @interface
  */
-export interface UserScopeRelationPayloadEvent extends EventPayloadAbstract {
+export interface UserScopeRelationPayloadEventDto extends EventPayloadAbstract {
     data: UserScopeRelationData;
 }
 

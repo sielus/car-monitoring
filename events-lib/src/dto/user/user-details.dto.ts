@@ -1,14 +1,4 @@
-import { EventPayloadAbstract } from "src/dto/event-payload.abstract";
-
-/**
- * Represents the payload event for user Upserting (create/update).
- * @interface
- */
-export interface UserUpsertPayloadEvent extends EventPayloadAbstract {
-    data: UserDetails;
-}
-
-interface UserDetails {
+export interface UserDetailsDto {
     /**
      * The ID of the user from User-Service
      * @type {string}

@@ -1,5 +1,4 @@
 import { ClientProviderOptions, Transport } from '@nestjs/microservices';
-import { services } from '@sielus/events-lib';
 
 export const microserviceConfig: ClientProviderOptions = {
   transport: Transport.KAFKA,
@@ -7,10 +6,10 @@ export const microserviceConfig: ClientProviderOptions = {
   options: {
     client: {
       brokers: ['127.0.0.1:9092'],
-      clientId: services.userService,
+      clientId: process.env.SERVICE_ID,
     },
     consumer: {
-      groupId: services.userService,
+      groupId: process.env.SERVICE_ID,
       allowAutoTopicCreation: true,
     },
   },
