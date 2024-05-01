@@ -18,7 +18,7 @@ import { UserModule } from './user/user.module';
     CronJobsModule,
     ScheduleModule.forRoot(),
     UserModule,
-    AuthModule,
+    AuthModule.register(process.env.JWT_PUBLIC),
     AdminModule,
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
