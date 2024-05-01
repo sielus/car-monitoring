@@ -1,13 +1,11 @@
 import { Controller, Inject } from '@nestjs/common';
+import { ClientKafka, EventPattern, Payload } from '@nestjs/microservices';
 import {
-  ClientKafka,
-  EventPattern,
-  MessagePattern,
-  Payload,
-} from '@nestjs/microservices';
-import { UserRemovePayloadEvent } from 'src/event-handler/dto/user-remove-payload.event';
-import { UserScopeRelationPayloadEvent } from 'src/event-handler/dto/user-scope-relation-payload.event';
-import { UserUpsertPayloadEvent } from 'src/event-handler/dto/user-upsert-payload.event';
+  UserRemovePayloadEvent,
+  UserScopeRelationPayloadEvent,
+  UserUpsertPayloadEvent,
+} from '@sielus/events-lib';
+
 import { EventHandlerService } from 'src/event-handler/event-handler.service';
 
 @Controller()

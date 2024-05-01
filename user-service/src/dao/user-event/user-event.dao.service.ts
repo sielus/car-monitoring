@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UserRemovePayloadEvent } from 'src/cron-jobs/services/events/dto/user-remove-payload.event';
-import { UserUpsertPayloadEvent } from 'src/cron-jobs/services/events/dto/user-upsert-payload.event';
+import {
+  UserRemovePayloadEvent,
+  UserUpsertPayloadEvent,
+} from '@sielus/events-lib';
+
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -8,7 +11,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserEventDaoService {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async getUnPublishedUpsertUsers() {
+  public async getUnPublishedUpsertUsers(): Promise<UserUpsertPayloadEvent[]> {
+    const events: UserUpsertPayloadEvent[] = [];
     const data = await this.prisma.user.findMany({
       where: { isPublished: false, isRemoved: false },
       select: {
@@ -17,13 +21,19 @@ export class UserEventDaoService {
         password: true,
       },
     });
-    return data.map((record) => {
-      return new UserUpsertPayloadEvent({
-        login: record.login,
-        password: record.password,
-        userId: record.id,
+
+    data.forEach((record) => {
+      events.push({
+        createdAt: new Date(),
+        data: {
+          login: record.login,
+          password: record.password,
+          userId: record.id,
+        },
       });
     });
+
+    return events;
   }
 
   public async updateIsPublishedStatus(userId: string, isPublished: boolean) {
@@ -42,16 +52,23 @@ export class UserEventDaoService {
   }
 
   public async getUnPublishedRemoveUsers(): Promise<UserRemovePayloadEvent[]> {
+    const events: UserRemovePayloadEvent[] = [];
     const data = await this.prisma.user.findMany({
       where: { isPublished: false, isRemoved: true },
       select: {
         id: true,
       },
     });
-    return data.map((record) => {
-      return new UserRemovePayloadEvent({
-        userId: record.id,
+
+    data.forEach((record) => {
+      events.push({
+        createdAt: new Date(),
+        data: {
+          userId: record.id,
+        },
       });
     });
+
+    return events;
   }
 }

@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UserRemovePayloadEvent } from 'src/cron-jobs/services/events/dto/user-remove-payload.event';
-import { UserScopeRelationPayloadEvent } from 'src/cron-jobs/services/events/dto/user-scope-relation-payload.event';
-import { UserUpsertPayloadEvent } from 'src/cron-jobs/services/events/dto/user-upsert-payload.event';
+import {
+  UserRemovePayloadEvent,
+  UserScopeRelationPayloadEvent,
+  UserUpsertPayloadEvent,
+} from '@sielus/events-lib';
+
 import { EventSenderService } from 'src/cron-jobs/services/events/event-sender/event-sender.service';
 import { UserEventDaoService } from 'src/dao/user-event/user-event.dao.service';
 import { UserScopeRelationDaoService } from 'src/dao/user-scope-relation/user-scope-relation.dao.service';

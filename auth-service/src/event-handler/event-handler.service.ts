@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import e from 'express';
+import {
+  UserRemovePayloadEvent,
+  UserScopeRelationPayloadEvent,
+  UserUpsertPayloadEvent,
+} from '@sielus/events-lib';
 import { UserEventHandlerDaoService } from 'src/event-handler/dao/user-event-handler.dao/user-event-handler.dao.service';
 import { UserScopeRelationEventDaoService } from 'src/event-handler/dao/user-scope-relation-event.dao/user-scope-relation-event.dao.service';
-import { UserRemovePayloadEvent } from 'src/event-handler/dto/user-remove-payload.event';
-import { UserScopeRelationPayloadEvent } from 'src/event-handler/dto/user-scope-relation-payload.event';
-import { UserUpsertPayloadEvent } from 'src/event-handler/dto/user-upsert-payload.event';
 
 @Injectable()
 export class EventHandlerService {
@@ -27,6 +28,5 @@ export class EventHandlerService {
 
   public async removeUserScopeRelation(event: UserScopeRelationPayloadEvent) {
     await this.userScopeRelationEventDaoService.handleRemoveEvent(event);
-
   }
 }
