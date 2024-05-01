@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import {
   topics,
-  UserRemovePayloadEvent,
-  UserScopeRelationPayloadEvent,
-  UserUpsertPayloadEvent,
+  UserRemovePayloadEventDto,
+  UserScopeRelationPayloadEventDto,
+  UserUpsertPayloadEventDto,
 } from '@sielus/events-lib';
 
 @Injectable()
@@ -13,15 +13,15 @@ export class EventSenderService {
 
   serviceId = process.env.SERVICE_ID;
 
-  public emitUpsertUser(event: UserUpsertPayloadEvent) {
+  public emitUpsertUser(event: UserUpsertPayloadEventDto) {
     this.kafka.emit(`${this.serviceId}.${topics.upsertUserTopic}`, { event });
   }
 
-  public emitRemoveUser(event: UserRemovePayloadEvent) {
+  public emitRemoveUser(event: UserRemovePayloadEventDto) {
     this.kafka.emit(`${this.serviceId}.${topics.removeUserTopic}`, { event });
   }
 
-  public emitCreateUserScopeRelation(event: UserScopeRelationPayloadEvent) {
+  public emitCreateUserScopeRelation(event: UserScopeRelationPayloadEventDto) {
     this.kafka.emit(
       `${this.serviceId}.${topics.createUserScopeRelationTopic}`,
       {
@@ -30,7 +30,7 @@ export class EventSenderService {
     );
   }
 
-  public emitRemoveUserScopeRelation(event: UserScopeRelationPayloadEvent) {
+  public emitRemoveUserScopeRelation(event: UserScopeRelationPayloadEventDto) {
     this.kafka.emit(
       `${this.serviceId}.${topics.removeUserScopeRelationTopic}`,
       {

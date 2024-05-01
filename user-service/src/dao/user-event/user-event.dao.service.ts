@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
-  UserRemovePayloadEvent,
-  UserUpsertPayloadEvent,
+  UserRemovePayloadEventDto,
+  UserUpsertPayloadEventDto,
 } from '@sielus/events-lib';
 
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
@@ -11,8 +11,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserEventDaoService {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async getUnPublishedUpsertUsers(): Promise<UserUpsertPayloadEvent[]> {
-    const events: UserUpsertPayloadEvent[] = [];
+  public async getUnPublishedUpsertUsers(): Promise<
+    UserUpsertPayloadEventDto[]
+  > {
+    const events: UserUpsertPayloadEventDto[] = [];
     const data = await this.prisma.user.findMany({
       where: { isPublished: false, isRemoved: false },
       select: {
@@ -51,8 +53,10 @@ export class UserEventDaoService {
     }
   }
 
-  public async getUnPublishedRemoveUsers(): Promise<UserRemovePayloadEvent[]> {
-    const events: UserRemovePayloadEvent[] = [];
+  public async getUnPublishedRemoveUsers(): Promise<
+    UserRemovePayloadEventDto[]
+  > {
+    const events: UserRemovePayloadEventDto[] = [];
     const data = await this.prisma.user.findMany({
       where: { isPublished: false, isRemoved: true },
       select: {

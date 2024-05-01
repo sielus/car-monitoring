@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  UserRemovePayloadEvent,
-  UserUpsertPayloadEvent,
-} from '@sielus/events-lib';
+import { UserIdentityDto, UserUpsertPayloadEventDto } from '@sielus/events-lib';
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 import { PrismaService } from 'src/prisma.service';
 
@@ -10,7 +7,7 @@ import { PrismaService } from 'src/prisma.service';
 export class UserEventHandlerDaoService {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async upsertUser(payload: UserUpsertPayloadEvent) {
+  public async upsertUser(payload: UserUpsertPayloadEventDto) {
     await this.prisma.user.upsert({
       create: {
         login: payload.data.login,
@@ -32,9 +29,9 @@ export class UserEventHandlerDaoService {
     });
   }
 
-  public async removeUser(eventData: UserRemovePayloadEvent) {
+  public async removeUser(eventData: UserIdentityDto) {
     const data = await this.prisma.user.findFirst({
-      where: { userId: eventData.data.userId },
+      where: { userId: eventData.userId },
     });
     if (!data) {
       throw new UserNotFoundException();

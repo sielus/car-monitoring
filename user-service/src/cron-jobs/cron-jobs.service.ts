@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import {
-  UserRemovePayloadEvent,
-  UserScopeRelationPayloadEvent,
-  UserUpsertPayloadEvent,
+  UserRemovePayloadEventDto,
+  UserScopeRelationPayloadEventDto,
+  UserUpsertPayloadEventDto,
 } from '@sielus/events-lib';
 
 import { EventSenderService } from 'src/cron-jobs/services/events/event-sender/event-sender.service';
@@ -18,7 +18,7 @@ export class CronJobsService {
   ) {}
 
   public async sendUserUpsertEvents() {
-    const data: UserUpsertPayloadEvent[] =
+    const data: UserUpsertPayloadEventDto[] =
       await this.userEventDao.getUnPublishedUpsertUsers();
     for (const record of data) {
       this.eventSender.emitUpsertUser(record);
@@ -27,7 +27,7 @@ export class CronJobsService {
   }
 
   public async sendUserRemoveEvents() {
-    const data: UserRemovePayloadEvent[] =
+    const data: UserRemovePayloadEventDto[] =
       await this.userEventDao.getUnPublishedRemoveUsers();
     for (const record of data) {
       this.eventSender.emitRemoveUser(record);
@@ -36,7 +36,7 @@ export class CronJobsService {
   }
 
   public async sendUserScopeRelationUpsertEvents() {
-    const data: UserScopeRelationPayloadEvent[] =
+    const data: UserScopeRelationPayloadEventDto[] =
       await this.userScopeRelationEventDao.getUnPublishedCreateUserScopeRelation();
 
     for (const record of data) {
@@ -49,7 +49,7 @@ export class CronJobsService {
   }
 
   public async sendUserScopeRelationRemoveEvents() {
-    const data: UserScopeRelationPayloadEvent[] =
+    const data: UserScopeRelationPayloadEventDto[] =
       await this.userScopeRelationEventDao.getUnPublishedRemoveUserScopeRelation();
 
     for (const record of data) {

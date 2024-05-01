@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import {
-  UserRemovePayloadEvent,
-  UserScopeRelationPayloadEvent,
-  UserUpsertPayloadEvent,
+  UserRemovePayloadEventDto,
+  UserScopeRelationPayloadEventDto,
+  UserUpsertPayloadEventDto,
 } from '@sielus/events-lib';
 import { UserEventHandlerDaoService } from 'src/event-handler/dao/user-event-handler.dao/user-event-handler.dao.service';
 import { UserScopeRelationEventDaoService } from 'src/event-handler/dao/user-scope-relation-event.dao/user-scope-relation-event.dao.service';
@@ -14,19 +14,23 @@ export class EventHandlerService {
     private readonly userScopeRelationEventDaoService: UserScopeRelationEventDaoService,
   ) {}
 
-  public async upsertUser(payload: UserUpsertPayloadEvent) {
+  public async upsertUser(payload: UserUpsertPayloadEventDto) {
     await this.userEventHandlerDaoService.upsertUser(payload);
   }
 
-  public async removeUser(event: UserRemovePayloadEvent) {
-    await this.userEventHandlerDaoService.removeUser(event);
+  public async removeUser(event: UserRemovePayloadEventDto) {
+    await this.userEventHandlerDaoService.removeUser(event.data);
   }
 
-  public async createUserScoreRelation(event: UserScopeRelationPayloadEvent) {
+  public async createUserScoreRelation(
+    event: UserScopeRelationPayloadEventDto,
+  ) {
     await this.userScopeRelationEventDaoService.handleCreateEvent(event);
   }
 
-  public async removeUserScopeRelation(event: UserScopeRelationPayloadEvent) {
+  public async removeUserScopeRelation(
+    event: UserScopeRelationPayloadEventDto,
+  ) {
     await this.userScopeRelationEventDaoService.handleRemoveEvent(event);
   }
 }
