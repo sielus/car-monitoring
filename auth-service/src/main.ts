@@ -22,6 +22,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   await app.startAllMicroservices();
   await app.listen(process.env.PORT);
+  console.log(
+    `${process.env.SERVICE_ID} has started at ${process.env.PORT} port`,
+  );
 }
 
 bootstrap();
