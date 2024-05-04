@@ -2,6 +2,8 @@
 
 This project is currently in progress of development.
 
+Project moved on: https://gitlab.com/car-monitoring-nestjs-microservices
+
 
 ### Current status:
 - npm libs for events types and list of topics
